@@ -8,6 +8,9 @@ WORKDIR /
 # Install git
 RUN apt-get update && apt-get install -y git
 
+# Installl ffmpeg and stuff for opencv
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
+
 # Install python packages
 RUN pip3 install --upgrade pip
 ADD requirements.txt requirements.txt

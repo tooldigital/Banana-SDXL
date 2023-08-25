@@ -1,4 +1,3 @@
---extra-index-url https://download.pytorch.org/whl/cu117
 opencv-python-headless
 potassium
 transformers==4.27
