@@ -9,7 +9,7 @@ app = Potassium("my_app")
 @app.init
 def init():
 
-    base = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, variant="fp16", use_safetensors=False)
+    base = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, variant="fp16", use_safetensors=True)
     base.to("cuda")
 
     refiner = DiffusionPipeline.from_pretrained(
