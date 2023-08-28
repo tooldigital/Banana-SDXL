@@ -40,7 +40,7 @@ def handler(context: dict, request: Request) -> Response:
     high_noise_frac = 0.8
 
 
-    model.unet = torch.compile(pipe.unet, mode="reduce-overhead", fullgraph=True)
+    model.unet = torch.compile(model.unet, mode="reduce-overhead", fullgraph=True)
     
     image = model(
         prompt=prompt,
