@@ -39,6 +39,9 @@ def handler(context: dict, request: Request) -> Response:
     n_steps = 40
     high_noise_frac = 0.8
 
+
+    model.unet = torch.compile(pipe.unet, mode="reduce-overhead", fullgraph=True)
+    
     image = model(
         prompt=prompt,
         num_inference_steps=n_steps,
