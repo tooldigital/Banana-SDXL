@@ -1,5 +1,6 @@
 from potassium import Potassium, Request, Response
 from diffusers import DiffusionPipeline
+from diffusers import StableDiffusionXLPipeline
 import torch
 import base64
 from io import BytesIO
@@ -9,7 +10,9 @@ app = Potassium("my_app")
 @app.init
 def init():
 
-    base = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, variant="fp16", use_safetensors=True)
+
+    base = StableDiffusionXLPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, variant="fp16", use_safetensors=True)
+    #base = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, variant="fp16", use_safetensors=True)
     base.to("cuda")
 
     refiner = DiffusionPipeline.from_pretrained(
@@ -36,10 +39,12 @@ def handler(context: dict, request: Request) -> Response:
     refiner = context.get("refiner")
     prompt = request.json.get("prompt")
    
+   
+
+
+    '''
     n_steps = 40
     high_noise_frac = 0.8
-
-
     model.unet = torch.compile(model.unet, mode="reduce-overhead", fullgraph=True)
     
     image = model(
@@ -55,7 +60,10 @@ def handler(context: dict, request: Request) -> Response:
         denoising_start=high_noise_frac,
     image=image,
     ).images[0]
-
+    '''
+    
+    image = model(prompt=prompt).images[0]
+    
     buffered = BytesIO()
     image.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue())
