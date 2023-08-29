@@ -65,7 +65,7 @@ def handler(context: dict, request: Request) -> Response:
     image = model(prompt=prompt).images[0]
     
     buffered = BytesIO()
-    image.save(buffered, format="JPG",quality=80)
+    image.save(buffered, format='JPEG',quality=80)
     img_str = base64.b64encode(buffered.getvalue())
 
     # You could also consider writing this image to S3
